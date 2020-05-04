@@ -89,8 +89,12 @@ def trainNetwork(network, train,l_rate, n_epoch, n_outputs):
       updateWeights(network, row, l_rate)
   print('>epoch=%d, lrate=%.3f, error=%.3f' % (epoch, l_rate, sum_error))
 
-# Test training backprop algorithm
-seed(1)
+# Make a prediction with a network
+def predict(network, row):
+	outputs = forwardPropagate(network, row)
+	return outputs.index(max(outputs))
+ 
+# Test making predictions with the network
 dataset = [[2.7810836,2.550537003,0],
 	[1.465489372,2.362125076,0],
 	[3.396561688,4.400293529,0],
@@ -101,9 +105,10 @@ dataset = [[2.7810836,2.550537003,0],
 	[6.922596716,1.77106367,1],
 	[8.675418651,-0.242068655,1],
 	[7.673756466,3.508563011,1]]
-n_inputs = len(dataset[0]) - 1
-n_outputs = len(set([row[-1] for row in dataset]))
-network = initializeNetwork(n_inputs, 2, n_outputs)
-trainNetwork(network, dataset, 0.5, 20, n_outputs)
-for layer in network:
-	print(layer)
+
+
+network = [[{'weights': [-1.482313569067226, 1.8308790073202204, 1.078381922048799]}, {'weights': [0.23244990332399884, 0.3621998343835864, 0.40289821191094327]}],
+	[{'weights': [2.5001872433501404, 0.7887233511355132, -1.1026649757805829]}, {'weights': [-2.429350576245497, 0.8357651039198697, 1.0699217181280656]}]]
+for row in dataset:
+	prediction = predict(network, row)
+	print('Expected=%d, Got=%d' % (row[-1], prediction))
