@@ -1,2 +1,2 @@
 # neural-network-py
-Third ml project
+third ml project & first time using python
